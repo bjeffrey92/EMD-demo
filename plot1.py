@@ -63,7 +63,7 @@ def compute_envelopes(
 
 def plot(
     x: np.ndarray,
-    y: np.ndarray,
+    component: np.ndarray,
     y_with_noise: np.ndarray,
     upper_envelope: np.ndarray,
     lower_envelope: np.ndarray,
@@ -73,8 +73,8 @@ def plot(
     local_minima: np.ndarray,
 ):
     plt.clf()
-    plt.plot(x[20:], y[20:], color="black", linestyle="--", label="Signal")
-    plt.plot(x[20:], y_with_noise[20:], color="blue", label="Noise")
+    plt.plot(x[20:], component[21:-1], color="black", linestyle="--", label="Component")
+    plt.plot(x[20:], y_with_noise[20:], color="blue", label="Noisey Data")
     plt.plot(
         x[20:], upper_envelope[21:-1], color="green", label="Upper & Lower Envelopes"
     )
@@ -91,9 +91,10 @@ def main():
     local_maxima, upper_envelope, local_minima, lower_envelope = compute_envelopes(
         y_with_noise, idx_local_maxima, idx_local_minima
     )
+    component = np.mean((lower_envelope, upper_envelope), axis=0)
     plot(
         x,
-        y,
+        component,
         y_with_noise,
         upper_envelope,
         lower_envelope,
