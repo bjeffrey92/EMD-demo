@@ -1,16 +1,11 @@
-from typing import Callable, Tuple, Union
+from typing import Callable, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import interpolate
 from scipy.signal import argrelextrema
 
-
-N = 15
-
-
-def smooth_function(x: Union[int, float, np.ndarray]) -> Union[int, float, np.ndarray]:
-    return (x**3 - 10 * x**2 + 100 + 0.001 * x**4) / 2
+from utils import N, smooth_function
 
 
 def plot1_data(
@@ -86,7 +81,7 @@ def plot(
 
 
 def main():
-    x, y, y_with_noise = plot1_data(smooth_function, sin_amplitude=200, sin_exponent=5)
+    x, _, y_with_noise = plot1_data(smooth_function, sin_amplitude=200, sin_exponent=5)
     idx_local_maxima, idx_local_minima = get_extrema(y_with_noise)
     local_maxima, upper_envelope, local_minima, lower_envelope = compute_envelopes(
         y_with_noise, idx_local_maxima, idx_local_minima
